@@ -79,8 +79,8 @@ rule align:
 		javaVersion = config['javaVers'],
 		rg = lambda wildcards: f"@RG\\tID:{wildcards.sampleName}\\tSM:{wildcards.sampleName}\\tPL:ILLUMINA\\tLB:{wildcards.sampleName}_lib\\tPU:{wildcards.sampleName}_unit"
 	resources: 
-		cpus_per_task: "8"
-		mem_mb_per_cpu: "10G"
+		cpus_per_task = 8,
+		mem_mb_per_cpu = "10G"
 	shell:
 		"""
 		module load bwa/{params.bwaVersion};
