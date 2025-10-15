@@ -60,7 +60,7 @@ rule align:
 		trim1 = rules.trim.output.trim1,
 		trim2 = rules.trim.output.trim2
 	output:
-		bam = temp("output/align/{sampleName}_sorted.bam"),
+		bam = "output/align/{sampleName}_sorted.bam",
 		stats = "output/align/{sampleName}_stats.txt",
 		filteredBam = "output/align/{sampleName}_nodups_sorted.bam",
 		dupStats = "output/align/{sampleName}_dup_metrics.txt",
@@ -86,7 +86,7 @@ rule align:
 		module load java/{params.javaVersion};
 		bwa mem -t 8 -R '{params.rg}' {params.index} {input.trim1} {input.trim2} | samtools view -u | samtools sort -o {output.bam} 1> {log.out} 2> {log.err};
 		samtools flagstat {output.bam} > {output.stats} 2>> {log.err};
-		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.bam} O={output.filteredBam} M={output.dupStats} REMOVE_SEQUENCING_DUPLICATES=true;
+		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.bam} O={output.filteredBam} M={output.dupStats} REMOVE_DUPLICATES=true;
 		samtools index {output.filteredBam} 1>> {log.out} 2>> {log.err}
 		"""
 
