@@ -75,7 +75,7 @@ rule align:
 		module load java/{params.javaVersion};
 		bwa mem -t 8 -R '{params.rg}' {params.index} {input.trim1} | samtools view -u | samtools sort -o {output.bam} 1> {log.out} 2> {log.err};
 		samtools flagstat {output.bam} > {output.stats} 2>> {log.err};
-		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.bam} O={output.filteredBam} M={output.dupStats} REMOVE_SEQUENCING_DUPLICATES=true;
+		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.bam} O={output.filteredBam} M={output.dupStats} REMOVE_DUPLICATES=true;
 		samtools index {output.filteredBam} 1>> {log.out} 2>> {log.err}
 		"""
 

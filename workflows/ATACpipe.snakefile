@@ -88,7 +88,7 @@ rule align:
 		module load java/{params.javaVersion};
 		bwa mem -t 8 -R '{params.rg}' {params.index} {input.trim1} {input.trim2} | samtools view -u | samtools sort -o {output.sortedBam} 1> {log.out} 2> {log.err};
 		samtools flagstat {output.sortedBam} > {output.stats} 2>> {log.err};
-		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.sortedBam} O={output.nodupsBam} M={output.dupStats} REMOVE_SEQUENCING_DUPLICATES=true;
+		java -Xmx16g -jar /nas/longleaf/apps/picard/3.4.0/picard-3.4.0/picard.jar MarkDuplicates I={output.sortedBam} O={output.nodupsBam} M={output.dupStats} REMOVE_DUPLICATES=true;
 		samtools index {output.nodupsBam} 1>> {log.out} 2>> {log.err}
 		samtools idxstats {output.nodupsBam} | cut -f 1 | grep -v 'chrM' | xargs samtools view -b {output.nodupsBam} > {output.filteredBam};
 		samtools index {output.filteredBam} 1>> {log.out} 2>> {log.err}

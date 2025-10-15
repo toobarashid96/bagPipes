@@ -60,7 +60,7 @@ rule align:
 		trim1 = rules.trim.output.trim1,
 		trim2 = rules.trim.output.trim2
 	output:
-		bam = "output/align/{sampleName}_sorted.bam",
+		bam = temp("output/align/{sampleName}_sorted.bam"),
 		stats = "output/align/{sampleName}_stats.txt",
 		filteredBam = "output/align/{sampleName}_nodups_sorted.bam",
 		dupStats = "output/align/{sampleName}_dup_metrics.txt",
